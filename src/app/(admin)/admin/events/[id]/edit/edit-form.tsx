@@ -1,93 +1,91 @@
-"use client"
+"use client";
 
-import { useState, useRef } from "react"
-import { useRouter } from "next/navigation"
-import { ArrowLeft, Upload, X } from "lucide-react"
-import Link from "next/link"
-import { updateEvent } from "@/actions/events"
-import { toast } from "sonner"
-import type { EventData } from "@/types"
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Upload, X } from "lucide-react";
+import Link from "next/link";
+import { updateEvent } from "@/actions/events";
+import { toast } from "sonner";
+import type { EventData } from "@/types";
 
 export default function EditEventForm({ event }: { event: EventData }) {
-  const router = useRouter()
-  const [loading, setLoading] = useState(false)
-  const [flyerPreview, setFlyerPreview] = useState<string>(event.flyerImageUrl)
-  const [flyerUrl, setFlyerUrl] = useState(event.flyerImageUrl)
-  const [uploading, setUploading] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [flyerPreview, setFlyerPreview] = useState<string>(event.flyerImageUrl);
+  const [flyerUrl, setFlyerUrl] = useState(event.flyerImageUrl);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const file = e.target.files?.[0];
+    if (!file) return;
 
     if (file.size > 10 * 1024 * 1024) {
-      toast.error("Le fichier ne doit pas dépasser 10 MB")
-      return
+      toast.error("Le fichier ne doit pas dépasser 10 MB");
+      return;
     }
 
     if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
-      toast.error("Format accepté : PNG, JPG, WEBP")
-      return
+      toast.error("Format accepté : PNG, JPG, WEBP");
+      return;
     }
 
-    const preview = URL.createObjectURL(file)
-    setFlyerPreview(preview)
-    setUploading(true)
+    const preview = URL.createObjectURL(file);
+    setFlyerPreview(preview);
+    setUploading(true);
 
     try {
-      const formData = new FormData()
-      formData.append("file", file)
+      const formData = new FormData();
+      formData.append("file", file);
       const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
-      })
-      const data = await response.json()
+      });
+      const data = await response.json();
 
       if (data.url) {
-        setFlyerUrl(data.url)
-        toast.success("Flyer uploadé avec succès")
+        setFlyerUrl(data.url);
+        toast.success("Flyer uploadé avec succès");
       } else {
-        toast.error(data.error || "Erreur lors de l'upload")
-        setFlyerPreview(event.flyerImageUrl)
+        toast.error(data.error || "Erreur lors de l'upload");
+        setFlyerPreview(event.flyerImageUrl);
       }
     } catch {
-      toast.error("Erreur lors de l'upload")
-      setFlyerPreview(event.flyerImageUrl)
+      toast.error("Erreur lors de l'upload");
+      setFlyerPreview(event.flyerImageUrl);
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
-  }
+  };
 
   const removeFlyer = () => {
-    setFlyerPreview("")
-    setFlyerUrl("")
-    if (fileInputRef.current) fileInputRef.current.value = ""
-  }
+    setFlyerPreview("");
+    setFlyerUrl("");
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData(e.currentTarget);
     if (flyerUrl) {
-      formData.set("flyerImageUrl", flyerUrl)
+      formData.set("flyerImageUrl", flyerUrl);
     }
 
-    const result = await updateEvent(event.id, formData)
+    const result = await updateEvent(event.id, formData);
 
     if (result.success) {
-      toast.success("Événement mis à jour")
-      router.push("/admin/events")
-      router.refresh()
+      toast.success("Événement mis à jour");
+      router.push("/admin/events");
+      router.refresh();
     } else {
-      toast.error(result.error || "Erreur lors de la mise à jour")
+      toast.error(result.error || "Erreur lors de la mise à jour");
     }
-    setLoading(false)
+    setLoading(false);
   }
 
-  const eventDateLocal = new Date(event.eventDate)
-    .toISOString()
-    .slice(0, 16)
+  const eventDateLocal = new Date(event.eventDate).toISOString().slice(0, 16);
 
   return (
     <div className="space-y-8 max-w-2xl">
@@ -169,9 +167,7 @@ export default function EditEventForm({ event }: { event: EventData }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1.5">
-              Publié
-            </label>
+            <label className="block text-sm font-medium mb-1.5">Publié</label>
             <label className="flex items-center gap-3">
               <input
                 type="checkbox"
@@ -187,9 +183,7 @@ export default function EditEventForm({ event }: { event: EventData }) {
         </div>
 
         <div className="rounded-xl border border-border/40 bg-card p-6">
-          <label className="block text-sm font-medium mb-3">
-            Flyer
-          </label>
+          <label className="block text-sm font-medium mb-3">Flyer</label>
 
           {flyerPreview ? (
             <div className="relative rounded-lg overflow-hidden border border-border/40">
@@ -239,9 +233,7 @@ export default function EditEventForm({ event }: { event: EventData }) {
 
         {event.qrCodeUrl && (
           <div className="rounded-xl border border-border/40 bg-card p-6">
-            <label className="block text-sm font-medium mb-3">
-              QR Code
-            </label>
+            <label className="block text-sm font-medium mb-3">QR Code</label>
             <div className="flex items-center gap-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -280,5 +272,5 @@ export default function EditEventForm({ event }: { event: EventData }) {
         </div>
       </form>
     </div>
-  )
+  );
 }

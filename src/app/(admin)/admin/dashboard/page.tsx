@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { ArrowRight, Plus } from "lucide-react"
-import { prisma } from "@/lib/db"
+import Link from "next/link";
+import { ArrowRight, Plus } from "lucide-react";
+import { prisma } from "@/lib/db";
 
 async function getStats() {
   const [totalEvents, scanResult, downloadResult, recentEvents] =
@@ -12,18 +12,18 @@ async function getStats() {
         orderBy: { createdAt: "desc" },
         take: 5,
       }),
-    ])
+    ]);
 
   return {
     totalEvents,
     totalScans: scanResult._sum.scanCount ?? 0,
     totalDownloads: downloadResult._sum.downloadCount ?? 0,
     recentEvents,
-  }
+  };
 }
 
 export default async function DashboardPage() {
-  const stats = await getStats()
+  const stats = await getStats();
 
   const cards = [
     {
@@ -41,7 +41,7 @@ export default async function DashboardPage() {
       value: stats.totalDownloads,
       href: "/admin/events",
     },
-  ]
+  ];
 
   return (
     <div className="space-y-8">
@@ -137,5 +137,5 @@ export default async function DashboardPage() {
         )}
       </div>
     </div>
-  )
+  );
 }

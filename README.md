@@ -3,24 +3,25 @@
 Application web de gestion d'événements avec génération automatique de QR codes.
 
 **Parcours utilisateur :**
+
 - **Admin** : Crée un événement → QR code généré automatiquement → Partage/imprime le QR code
 - **Visiteur** : Scanne le QR code → Voit le flyer → Télécharge le flyer
 
 ## Stack Technique
 
-| Technologie | Usage |
-|---|---|
-| **Next.js 15.5** (App Router) | Framework fullstack |
-| **TypeScript** | Typage strict |
-| **Tailwind CSS v3** | Styles |
-| **shadcn/ui** | Composants UI |
-| **Prisma** | ORM base de données |
-| **PostgreSQL (Neon)** | Base de données |
-| **NextAuth v5** (Auth.js) | Authentification admin |
-| **Vercel Blob** | Stockage des flyers |
-| **qrcode** | Génération QR codes |
-| **Zod** | Validation formulaires |
-| **Lucide React** | Icônes |
+| Technologie                   | Usage                  |
+| ----------------------------- | ---------------------- |
+| **Next.js 15.5** (App Router) | Framework fullstack    |
+| **TypeScript**                | Typage strict          |
+| **Tailwind CSS v3**           | Styles                 |
+| **shadcn/ui**                 | Composants UI          |
+| **Prisma**                    | ORM base de données    |
+| **PostgreSQL (Neon)**         | Base de données        |
+| **NextAuth v5** (Auth.js)     | Authentification admin |
+| **Vercel Blob**               | Stockage des flyers    |
+| **qrcode**                    | Génération QR codes    |
+| **Zod**                       | Validation formulaires |
+| **Lucide React**              | Icônes                 |
 
 ## Structure du Projet
 
@@ -116,6 +117,7 @@ npm run dev
 ```
 
 Accès :
+
 - **Landing page** : http://localhost:3000
 - **Admin login** : http://localhost:3000/admin/login
 - **Admin dashboard** : http://localhost:3000/admin/dashboard
@@ -148,12 +150,12 @@ vercel
 
 Variables d'environnement à configurer dans Vercel :
 
-| Variable | Description |
-|---|---|
-| `DATABASE_URL` | URL de connexion PostgreSQL |
-| `AUTH_SECRET` | Clé secrète NextAuth |
-| `BLOB_READ_WRITE_TOKEN` | Token Vercel Blob |
-| `NEXT_PUBLIC_APP_URL` | URL du déploiement |
+| Variable                | Description                 |
+| ----------------------- | --------------------------- |
+| `DATABASE_URL`          | URL de connexion PostgreSQL |
+| `AUTH_SECRET`           | Clé secrète NextAuth        |
+| `BLOB_READ_WRITE_TOKEN` | Token Vercel Blob           |
+| `NEXT_PUBLIC_APP_URL`   | URL du déploiement          |
 
 ### 5. Seed la base
 
@@ -165,6 +167,7 @@ vercel run db:seed
 ## Fonctionnalités
 
 ### Admin
+
 - [x] Authentification sécurisée (email/mot de passe)
 - [x] Dashboard avec statistiques
 - [x] CRUD complet des événements
@@ -174,6 +177,7 @@ vercel run db:seed
 - [x] Copie lien public
 
 ### Public
+
 - [x] Page événement optimisée mobile
 - [x] Affichage flyer en grand
 - [x] Bouton téléchargement flyer
@@ -196,10 +200,10 @@ npm run format      # Prettier
 
 ## API Routes
 
-| Route | Méthode | Description |
-|---|---|---|
-| `/api/auth/*` | POST | Authentification NextAuth |
-| `/api/upload` | POST | Upload flyer (max 10 MB) |
+| Route         | Méthode | Description               |
+| ------------- | ------- | ------------------------- |
+| `/api/auth/*` | POST    | Authentification NextAuth |
+| `/api/upload` | POST    | Upload flyer (max 10 MB)  |
 
 ## Licence
 

@@ -1,39 +1,39 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { signIn } from "next-auth/react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Sparkles, Eye, EyeOff } from "lucide-react"
-import Link from "next/link"
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Sparkles, Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 
 export default function LoginPage() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get("callbackUrl") || "/admin/dashboard"
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/admin/dashboard";
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    const formData = new FormData(e.currentTarget)
-    const email = formData.get("email") as string
-    const password = formData.get("password") as string
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
     const result = await signIn("credentials", {
       email,
       password,
       redirect: false,
-    })
+    });
 
     if (result?.error) {
-      setError("Email ou mot de passe incorrect")
-      setLoading(false)
+      setError("Email ou mot de passe incorrect");
+      setLoading(false);
     } else {
-      router.push(callbackUrl)
+      router.push(callbackUrl);
     }
   }
 
@@ -41,7 +41,10 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col bg-background">
       <header className="border-b border-border/40">
         <div className="mx-auto max-w-7xl px-6 py-4">
-          <Link href="/" className="inline-flex items-center gap-2 font-bold text-primary">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 font-bold text-primary"
+          >
             <Sparkles className="h-5 w-5" />
             CampusEvents
           </Link>
@@ -125,5 +128,5 @@ export default function LoginPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

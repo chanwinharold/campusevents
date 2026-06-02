@@ -1,12 +1,15 @@
-import Link from "next/link"
-import { ArrowRight, QrCode, ImageDown, Sparkles } from "lucide-react"
+import Link from "next/link";
+import { ArrowRight, QrCode, ImageDown, Sparkles } from "lucide-react";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b border-border/40">
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-xl font-bold text-primary">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-xl font-bold text-primary"
+          >
             <Sparkles className="h-6 w-6" />
             CampusEvents
           </Link>
@@ -29,12 +32,11 @@ export default function HomePage() {
               Gestion d&apos;événements simplifiée
             </div>
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl text-balance">
-              Créez, partagez,{" "}
-              <span className="text-primary">connectez</span>
+              Créez, partagez, <span className="text-primary">connectez</span>
             </h1>
             <p className="mt-6 text-lg text-muted-foreground text-balance max-w-xl mx-auto">
-              Générez des QR codes uniques pour vos événements. 
-              Vos invités scannent et accèdent instantanément aux informations.
+              Générez des QR codes uniques pour vos événements. Vos invités
+              scannent et accèdent instantanément aux informations.
             </p>
             <div className="mt-10 flex items-center justify-center gap-4">
               <Link
@@ -57,7 +59,8 @@ export default function HomePage() {
                 </div>
                 <h3 className="mt-4 font-semibold">QR Code unique</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Chaque événement reçoit un QR code unique généré automatiquement.
+                  Chaque événement reçoit un QR code unique généré
+                  automatiquement.
                 </p>
               </div>
               <div className="rounded-xl border border-border/40 p-6">
@@ -66,7 +69,8 @@ export default function HomePage() {
                 </div>
                 <h3 className="mt-4 font-semibold">Flyer intégré</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Upload simple du flyer. Les visiteurs le voient et le téléchargent.
+                  Upload simple du flyer. Les visiteurs le voient et le
+                  téléchargent.
                 </p>
               </div>
               <div className="rounded-xl border border-border/40 p-6">
@@ -89,5 +93,5 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

@@ -1,29 +1,29 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Trash2 } from "lucide-react"
-import { deleteEvent } from "@/actions/events"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
+import { useState } from "react";
+import { Trash2 } from "lucide-react";
+import { deleteEvent } from "@/actions/events";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function DeleteEventButton({ id }: { id: string }) {
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleDelete = async () => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cet événement ?")) return
+    if (!confirm("Êtes-vous sûr de vouloir supprimer cet événement ?")) return;
 
-    setLoading(true)
-    const result = await deleteEvent(id)
+    setLoading(true);
+    const result = await deleteEvent(id);
 
     if (result.success) {
-      toast.success("Événement supprimé")
-      router.refresh()
+      toast.success("Événement supprimé");
+      router.refresh();
     } else {
-      toast.error(result.error || "Erreur lors de la suppression")
+      toast.error(result.error || "Erreur lors de la suppression");
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <button
@@ -33,5 +33,5 @@ export function DeleteEventButton({ id }: { id: string }) {
     >
       <Trash2 className="h-4 w-4" />
     </button>
-  )
+  );
 }

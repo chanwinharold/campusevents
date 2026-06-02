@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function SettingsPage() {
-  const router = useRouter()
-  const [name, setName] = useState("")
+  const router = useRouter();
+  const [name, setName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    toast.success("Paramètres mis à jour")
-    router.refresh()
-  }
+    e.preventDefault();
+    toast.success("Paramètres mis à jour");
+    router.refresh();
+  };
 
   return (
     <div className="space-y-8 max-w-2xl">
@@ -50,5 +50,5 @@ export default function SettingsPage() {
         </div>
       </form>
     </div>
-  )
+  );
 }

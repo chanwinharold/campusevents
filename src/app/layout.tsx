@@ -1,12 +1,12 @@
-import type { Metadata } from "next"
-import { Plus_Jakarta_Sans } from "next/font/google"
-import "./globals.css"
-import { Toaster } from "sonner"
+import type { Metadata } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import "./globals.css";
+import { Toaster } from "sonner";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
-})
+});
 
 export const metadata: Metadata = {
   title: {
@@ -22,24 +22,19 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     siteName: "CampusEvents",
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="fr" className={jakarta.variable}>
       <body className="font-sans antialiased">
-        <Toaster
-          position="top-right"
-          richColors
-          closeButton
-          duration={4000}
-        />
+        <Toaster position="top-right" richColors closeButton duration={4000} />
         {children}
       </body>
     </html>
-  )
+  );
 }

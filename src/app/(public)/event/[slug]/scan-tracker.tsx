@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { useEffect, useRef } from "react"
-import { incrementScanCount } from "./actions"
+import { useEffect, useRef } from "react";
+import { incrementScanCount } from "./actions";
 
 export function ScanTracker({ slug }: { slug: string }) {
-  const tracked = useRef(false)
+  const tracked = useRef(false);
 
   useEffect(() => {
     if (!tracked.current) {
-      tracked.current = true
-      incrementScanCount(slug)
+      tracked.current = true;
+      incrementScanCount(slug);
     }
-  }, [slug])
+  }, [slug]);
 
-  return null
+  return null;
 }

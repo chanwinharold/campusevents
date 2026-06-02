@@ -1,33 +1,39 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Download, Share2, Check } from "lucide-react"
-import { incrementDownloadCount } from "./actions"
+import { useState } from "react";
+import { Download, Share2, Check } from "lucide-react";
+import { incrementDownloadCount } from "./actions";
 
-export function DownloadButton({ slug, flyerUrl }: { slug: string; flyerUrl: string }) {
-  const [downloaded, setDownloaded] = useState(false)
+export function DownloadButton({
+  slug,
+  flyerUrl,
+}: {
+  slug: string;
+  flyerUrl: string;
+}) {
+  const [downloaded, setDownloaded] = useState(false);
 
   const handleDownload = async () => {
     try {
-      const response = await fetch(flyerUrl)
-      const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = `flyer-${slug}.${blob.type.split("/")[1] || "jpg"}`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-      setDownloaded(true)
-      await incrementDownloadCount(slug)
-      setTimeout(() => setDownloaded(false), 2000)
+      const response = await fetch(flyerUrl);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `flyer-${slug}.${blob.type.split("/")[1] || "jpg"}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setDownloaded(true);
+      await incrementDownloadCount(slug);
+      setTimeout(() => setDownloaded(false), 2000);
     } catch (error) {
-      console.error("Download failed:", error)
-      window.open(flyerUrl, "_blank")
-      await incrementDownloadCount(slug)
+      console.error("Download failed:", error);
+      window.open(flyerUrl, "_blank");
+      await incrementDownloadCount(slug);
     }
-  }
+  };
 
   return (
     <button
@@ -46,30 +52,30 @@ export function DownloadButton({ slug, flyerUrl }: { slug: string; flyerUrl: str
         </>
       )}
     </button>
-  )
+  );
 }
 
 export function ShareButton({ slug, title }: { slug: string; title: string }) {
-  const [copied, setCopied] = useState(false)
-  const url = `${process.env.NEXT_PUBLIC_APP_URL || typeof window !== "undefined" ? window.location.origin : "http://localhost:3000"}/event/${slug}`
+  const [copied, setCopied] = useState(false);
+  const url = `${process.env.NEXT_PUBLIC_APP_URL || typeof window !== "undefined" ? window.location.origin : "http://localhost:3000"}/event/${slug}`;
 
   const handleShare = async () => {
     if (navigator.share) {
       try {
-        await navigator.share({ title, url })
+        await navigator.share({ title, url });
       } catch {
         // user cancelled
       }
     } else {
       try {
-        await navigator.clipboard.writeText(url)
-        setCopied(true)
-        setTimeout(() => setCopied(false), 2000)
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
       } catch {
-        console.error("Failed to copy")
+        console.error("Failed to copy");
       }
     }
-  }
+  };
 
   return (
     <button
@@ -88,5 +94,5 @@ export function ShareButton({ slug, title }: { slug: string; title: string }) {
         </>
       )}
     </button>
-  )
+  );
 }

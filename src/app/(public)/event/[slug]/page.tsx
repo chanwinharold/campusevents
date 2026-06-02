@@ -1,23 +1,23 @@
-import { notFound } from "next/navigation"
-import Image from "next/image"
-import Link from "next/link"
-import { Calendar, MapPin, ArrowLeft, Sparkles } from "lucide-react"
-import { prisma } from "@/lib/db"
-import { formatDate } from "@/lib/utils"
-import { ScanTracker } from "./scan-tracker"
-import { DownloadButton, ShareButton } from "./client-components"
-import type { Metadata } from "next"
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import { Calendar, MapPin, ArrowLeft, Sparkles } from "lucide-react";
+import { prisma } from "@/lib/db";
+import { formatDate } from "@/lib/utils";
+import { ScanTracker } from "./scan-tracker";
+import { DownloadButton, ShareButton } from "./client-components";
+import type { Metadata } from "next";
 
 interface Props {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const event = await prisma.event.findUnique({ where: { slug } })
+  const { slug } = await params;
+  const event = await prisma.event.findUnique({ where: { slug } });
 
   if (!event || !event.isPublished) {
-    return { title: "Événement non trouvé" }
+    return { title: "Événement non trouvé" };
   }
 
   return {
@@ -34,15 +34,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: event.shortDescription,
       images: [event.flyerImageUrl],
     },
-  }
+  };
 }
 
 export default async function EventPage({ params }: Props) {
-  const { slug } = await params
-  const event = await prisma.event.findUnique({ where: { slug } })
+  const { slug } = await params;
+  const event = await prisma.event.findUnique({ where: { slug } });
 
   if (!event || !event.isPublished) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -51,7 +51,10 @@ export default async function EventPage({ params }: Props) {
       <div className="min-h-screen flex flex-col bg-background">
         <header className="border-b border-border/40">
           <div className="mx-auto max-w-4xl px-4 py-4 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2 text-lg font-bold text-primary">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-lg font-bold text-primary"
+            >
               <Sparkles className="h-5 w-5" />
               CampusEvents
             </Link>
@@ -123,5 +126,5 @@ export default async function EventPage({ params }: Props) {
         </footer>
       </div>
     </>
-  )
+  );
 }

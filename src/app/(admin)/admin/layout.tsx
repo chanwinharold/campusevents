@@ -1,27 +1,27 @@
-import Link from "next/link"
-import { auth, signOut } from "@/lib/auth"
+import Link from "next/link";
+import { auth, signOut } from "@/lib/auth";
 import {
   LayoutDashboard,
   Calendar,
   Settings,
   LogOut,
   Sparkles,
-} from "lucide-react"
+} from "lucide-react";
 
 const navItems = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/events", label: "Événements", icon: Calendar },
   { href: "/admin/settings", label: "Paramètres", icon: Settings },
-]
+];
 
 export default async function AdminLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const session = await auth()
+  const session = await auth();
   if (!session) {
-    return <>{children}</>
+    return <>{children}</>;
   }
 
   return (
@@ -61,8 +61,8 @@ export default async function AdminLayout({
             </div>
             <form
               action={async () => {
-                "use server"
-                await signOut()
+                "use server";
+                await signOut();
               }}
             >
               <button
@@ -84,8 +84,8 @@ export default async function AdminLayout({
         </div>
         <form
           action={async () => {
-            "use server"
-            await signOut()
+            "use server";
+            await signOut();
           }}
         >
           <button
@@ -117,5 +117,5 @@ export default async function AdminLayout({
         <main className="p-6 md:p-8">{children}</main>
       </div>
     </div>
-  )
+  );
 }

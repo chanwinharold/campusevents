@@ -1,12 +1,12 @@
-import Link from "next/link"
-import { Plus, QrCode, ExternalLink, MoreHorizontal } from "lucide-react"
-import { prisma } from "@/lib/db"
-import { DeleteEventButton } from "./delete-button"
+import Link from "next/link";
+import { Plus, QrCode, ExternalLink, MoreHorizontal } from "lucide-react";
+import { prisma } from "@/lib/db";
+import { DeleteEventButton } from "./delete-button";
 
 export default async function EventsPage() {
   const events = await prisma.event.findMany({
     orderBy: { createdAt: "desc" },
-  })
+  });
 
   return (
     <div className="space-y-8">
@@ -112,9 +112,7 @@ export default async function EventsPage() {
                           Télécharger
                         </Link>
                       ) : (
-                        <span className="text-xs text-muted-foreground">
-                          -
-                        </span>
+                        <span className="text-xs text-muted-foreground">-</span>
                       )}
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -143,5 +141,5 @@ export default async function EventsPage() {
         </div>
       )}
     </div>
-  )
+  );
 }

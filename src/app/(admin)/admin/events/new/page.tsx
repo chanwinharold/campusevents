@@ -1,91 +1,91 @@
-"use client"
+"use client";
 
-import { useState, useRef } from "react"
-import { useRouter } from "next/navigation"
-import { ArrowLeft, Upload, X } from "lucide-react"
-import Link from "next/link"
-import { createEvent } from "@/actions/events"
-import { toast } from "sonner"
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Upload, X } from "lucide-react";
+import Link from "next/link";
+import { createEvent } from "@/actions/events";
+import { toast } from "sonner";
 
 export default function NewEventPage() {
-  const router = useRouter()
-  const [loading, setLoading] = useState(false)
-  const [flyerPreview, setFlyerPreview] = useState<string | null>(null)
-  const [flyerUrl, setFlyerUrl] = useState("")
-  const [uploading, setUploading] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const dropRef = useRef<HTMLDivElement>(null)
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [flyerPreview, setFlyerPreview] = useState<string | null>(null);
+  const [flyerUrl, setFlyerUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const dropRef = useRef<HTMLDivElement>(null);
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const file = e.target.files?.[0];
+    if (!file) return;
 
     if (file.size > 10 * 1024 * 1024) {
-      toast.error("Le fichier ne doit pas dépasser 10 MB")
-      return
+      toast.error("Le fichier ne doit pas dépasser 10 MB");
+      return;
     }
 
     if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
-      toast.error("Format accepté : PNG, JPG, WEBP")
-      return
+      toast.error("Format accepté : PNG, JPG, WEBP");
+      return;
     }
 
-    const preview = URL.createObjectURL(file)
-    setFlyerPreview(preview)
-    setUploading(true)
+    const preview = URL.createObjectURL(file);
+    setFlyerPreview(preview);
+    setUploading(true);
 
     try {
-      const formData = new FormData()
-      formData.append("file", file)
+      const formData = new FormData();
+      formData.append("file", file);
       const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
-      })
-      const data = await response.json()
+      });
+      const data = await response.json();
 
       if (data.url) {
-        setFlyerUrl(data.url)
-        toast.success("Flyer uploadé avec succès")
+        setFlyerUrl(data.url);
+        toast.success("Flyer uploadé avec succès");
       } else {
-        toast.error(data.error || "Erreur lors de l'upload")
-        setFlyerPreview(null)
+        toast.error(data.error || "Erreur lors de l'upload");
+        setFlyerPreview(null);
       }
     } catch {
-      toast.error("Erreur lors de l'upload")
-      setFlyerPreview(null)
+      toast.error("Erreur lors de l'upload");
+      setFlyerPreview(null);
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
-  }
+  };
 
   const removeFlyer = () => {
-    setFlyerPreview(null)
-    setFlyerUrl("")
-    if (fileInputRef.current) fileInputRef.current.value = ""
-  }
+    setFlyerPreview(null);
+    setFlyerUrl("");
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData(e.currentTarget);
     if (!flyerUrl) {
-      toast.error("Veuillez uploader un flyer")
-      setLoading(false)
-      return
+      toast.error("Veuillez uploader un flyer");
+      setLoading(false);
+      return;
     }
-    formData.set("flyerImageUrl", flyerUrl)
+    formData.set("flyerImageUrl", flyerUrl);
 
-    const result = await createEvent(formData)
+    const result = await createEvent(formData);
 
     if (result.success) {
-      toast.success("Événement créé avec succès")
-      router.push("/admin/events")
-      router.refresh()
+      toast.success("Événement créé avec succès");
+      router.push("/admin/events");
+      router.refresh();
     } else {
-      toast.error(result.error || "Erreur lors de la création")
+      toast.error(result.error || "Erreur lors de la création");
     }
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
@@ -220,9 +220,7 @@ export default function NewEventPage() {
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <Upload className="h-5 w-5" />
               </div>
-              <p className="mt-3 text-sm font-medium">
-                Cliquez pour uploader
-              </p>
+              <p className="mt-3 text-sm font-medium">Cliquez pour uploader</p>
               <p className="mt-1 text-xs text-muted-foreground">
                 PNG, JPG ou WEBP - Max 10 MB
               </p>
@@ -262,5 +260,5 @@ export default function NewEventPage() {
         </div>
       </form>
     </div>
-  )
+  );
 }
