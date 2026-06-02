@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { auth, signOut } from "@/lib/auth"
-import { redirect } from "next/navigation"
 import {
   LayoutDashboard,
   Calendar,
@@ -21,7 +20,9 @@ export default async function AdminLayout({
   children: React.ReactNode
 }) {
   const session = await auth()
-  if (!session) redirect("/admin/login")
+  if (!session) {
+    return <>{children}</>
+  }
 
   return (
     <div className="min-h-screen bg-background">
