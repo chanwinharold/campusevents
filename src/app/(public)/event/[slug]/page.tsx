@@ -1,6 +1,7 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { Calendar, MapPin, ArrowLeft, Sparkles } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
@@ -43,6 +44,12 @@ export default async function EventPage({ params }: Props) {
 
   if (!event || !event.isPublished) {
     notFound();
+  }
+
+  const cookieStore = await cookies();
+  const accessCookie = cookieStore.get(`event_access_${event.id}`);
+  if (!accessCookie) {
+    redirect(`/join/${slug}`);
   }
 
   return (

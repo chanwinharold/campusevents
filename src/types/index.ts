@@ -35,6 +35,17 @@ export interface DashboardStats {
   totalDownloads: number;
 }
 
+export interface ProspectData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  eventId: string;
+  event?: Pick<EventData, "id" | "title" | "slug">;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ActionResponse<T = unknown> {
   success: boolean;
   data?: T;
