@@ -152,6 +152,7 @@ export async function createEvent(
 
     revalidatePath("/admin/dashboard");
     revalidatePath("/admin/events");
+    revalidatePath("/admin/prospects");
 
     return { success: true, data: event as EventData };
   } catch (error) {
@@ -230,8 +231,10 @@ export async function updateEvent(
 
     revalidatePath("/admin/dashboard");
     revalidatePath("/admin/events");
+    revalidatePath("/admin/prospects");
     revalidatePath(`/admin/events/${id}/edit`);
     revalidatePath(`/event/${event.slug}`);
+    revalidatePath(`/join/${event.slug}`);
 
     return { success: true, data: event as EventData };
   } catch (error) {
@@ -252,6 +255,7 @@ export async function deleteEvent(id: string): Promise<ActionResponse<void>> {
 
     revalidatePath("/admin/dashboard");
     revalidatePath("/admin/events");
+    revalidatePath("/admin/prospects");
 
     return { success: true };
   } catch (error) {

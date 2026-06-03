@@ -22,5 +22,24 @@ export const updateEventSchema = createEventSchema.partial().extend({
   isPublished: z.boolean().optional(),
 });
 
+export const prospectSchema = z.object({
+  firstName: z
+    .string()
+    .min(2, "Veuillez renseigner votre prénom")
+    .max(100, "Le prénom est trop long"),
+  lastName: z
+    .string()
+    .min(2, "Veuillez renseigner votre nom")
+    .max(100, "Le nom est trop long"),
+  phoneNumber: z
+    .string()
+    .transform((val) => val.replace(/[\s\-.]/g, ""))
+    .refine(
+      (val) => /^(?:(?:\+|00)33|0)[1-9]\d{8}$/.test(val),
+      "Veuillez saisir un numéro valide",
+    ),
+});
+
 export type CreateEventFormData = z.infer<typeof createEventSchema>;
 export type UpdateEventFormData = z.infer<typeof updateEventSchema>;
+export type ProspectFormData = z.infer<typeof prospectSchema>;

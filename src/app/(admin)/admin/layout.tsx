@@ -3,6 +3,7 @@ import { auth, signOut } from "@/lib/auth";
 import {
   LayoutDashboard,
   Calendar,
+  Users,
   Settings,
   LogOut,
   Sparkles,
@@ -11,6 +12,7 @@ import {
 const navItems = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/events", label: "Événements", icon: Calendar },
+  { href: "/admin/prospects", label: "Prospects", icon: Users },
   { href: "/admin/settings", label: "Paramètres", icon: Settings },
 ];
 

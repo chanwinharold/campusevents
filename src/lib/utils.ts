@@ -29,7 +29,7 @@ export function formatDateShort(date: Date | string): string {
 
 export function generatePublicUrl(slug: string): string {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  return `${baseUrl}/event/${slug}`;
+  return `${baseUrl}/join/${slug}`;
 }
 
 export function truncate(str: string, length: number): string {

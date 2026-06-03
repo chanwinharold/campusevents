@@ -57,7 +57,7 @@ export function DownloadButton({
 
 export function ShareButton({ slug, title }: { slug: string; title: string }) {
   const [copied, setCopied] = useState(false);
-  const url = `${process.env.NEXT_PUBLIC_APP_URL || typeof window !== "undefined" ? window.location.origin : "http://localhost:3000"}/event/${slug}`;
+  const url = `${process.env.NEXT_PUBLIC_APP_URL || typeof window !== "undefined" ? window.location.origin : "http://localhost:3000"}/join/${slug}`;
 
   const handleShare = async () => {
     if (navigator.share) {

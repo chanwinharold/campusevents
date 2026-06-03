@@ -57,22 +57,38 @@ model VerificationToken {
 }
 
 model Event {
-  id               String   @id @default(cuid())
-  slug             String   @unique
+  id               String     @id @default(cuid())
+  slug             String     @unique
   title            String
-  shortDescription String   @db.Text
-  fullDescription  String?  @db.Text
+  shortDescription String     @db.Text
+  fullDescription  String?    @db.Text
   flyerImageUrl    String
   eventDate        DateTime
   location         String
   qrCodeUrl        String?
   publicUrl        String?
-  scanCount        Int      @default(0)
-  downloadCount    Int      @default(0)
-  isPublished      Boolean  @default(true)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  scanCount        Int        @default(0)
+  downloadCount    Int        @default(0)
+  isPublished      Boolean    @default(true)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  prospects        Prospect[]
 
   @@index([slug])
   @@index([createdAt])
+}
+
+model Prospect {
+  id         String   @id @default(cuid())
+  firstName  String
+  lastName   String
+  phoneNumber String
+  eventId    String
+  event      Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([phoneNumber, eventId])
+  @@index([eventId])
+  @@index([phoneNumber])
 }
